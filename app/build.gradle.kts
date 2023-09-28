@@ -51,6 +51,7 @@ dependencies {
     implementation ("com.afollestad.material-dialogs:core:3.3.0")
     implementation ("com.afollestad.material-dialogs:input:3.3.0")
     implementation ("com.airbnb.android:lottie:6.1.0")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
 
     //roomDB
     val roomVersion = "2.5.2"

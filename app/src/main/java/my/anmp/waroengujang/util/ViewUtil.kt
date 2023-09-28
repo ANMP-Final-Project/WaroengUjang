@@ -2,7 +2,9 @@ package my.anmp.waroengujang.util
 
 import android.content.Context
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 
 fun View.invisible() {
@@ -31,4 +33,8 @@ fun shortSnackBar(context: Context,rootView: View,message: String){
 
 fun longSnackBar(context: Context,rootView: View,message: String){
     Snackbar.make(context,rootView,message,Snackbar.LENGTH_LONG).show()
+}
+
+fun loadImage(context: Context,url:String,imageView:ImageView){
+    Glide.with(context).load(url).centerCrop().into(imageView)
 }

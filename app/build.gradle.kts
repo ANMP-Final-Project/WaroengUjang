@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
-    id("kotlin-parcelize")
 }
 
 android {
@@ -52,6 +51,7 @@ dependencies {
     implementation ("com.afollestad.material-dialogs:input:3.3.0")
     implementation ("com.airbnb.android:lottie:6.1.0")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
     //roomDB
     val roomVersion = "2.5.2"
@@ -65,6 +65,9 @@ dependencies {
 
     //serialization
     implementation ("com.google.code.gson:gson:2.10.1")
+
+    //networking
+    implementation ("com.android.volley:volley:1.2.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

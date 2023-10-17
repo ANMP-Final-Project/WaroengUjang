@@ -11,6 +11,12 @@ ANMP Final Project Ubaya : Waroeng Ujang & Waitress App is an application used b
 - ZUFAR AFI NUR RACHMAN (160420106)
 - GHULAM ANUGERAH FADLI (160420110)
 
+## Contribute
+# clone this project
+``` git clone https://github.com/ANMP-Final-Project/WaroengUjang.git ```
+# create new branch
+# pull request to merge
+
 ## Third Party Library 
 - Material Dialog by afollestad [link](https://github.com/afollestad/material-dialogs)
 - Lottie Animation [link](https://github.com/airbnb/lottie-android)

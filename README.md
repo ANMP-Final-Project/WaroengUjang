@@ -14,8 +14,8 @@ ANMP Final Project Ubaya : Waroeng Ujang & Waitress App is an application used b
 ## Contribute
 # clone this project
 ``` git clone https://github.com/ANMP-Final-Project/WaroengUjang.git ```
-# create new branch
-# pull request to merge
+- create new branch
+- pull request to merge
 
 ## Third Party Library 
 - Material Dialog by afollestad [link](https://github.com/afollestad/material-dialogs)

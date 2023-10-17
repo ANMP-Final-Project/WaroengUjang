@@ -4,7 +4,7 @@ import android.content.Context
 import com.google.gson.Gson
 
 
-fun loadJSONFromAsset(context: Context, fileName: String): String? {
+fun loadJSONFromAsset(context: Context, fileName: String): String {
     return context.assets.open(fileName).bufferedReader().use { it.readText() }
 }
 

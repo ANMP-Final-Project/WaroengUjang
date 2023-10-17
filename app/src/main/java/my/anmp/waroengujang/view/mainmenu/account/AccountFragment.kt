@@ -1,4 +1,3 @@
 package my.anmp.waroengujang.view.mainmenu.account
 
-class AccountFragment {
-}
+class AccountFragment

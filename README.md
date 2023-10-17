@@ -12,8 +12,8 @@ ANMP Final Project Ubaya : Waroeng Ujang & Waitress App is an application used b
 - GHULAM ANUGERAH FADLI (160420110)
 
 ## Contribute
-### clone this project
-``` git clone https://github.com/ANMP-Final-Project/WaroengUjang.git ```
+- clone this project
+- ``` git clone https://github.com/ANMP-Final-Project/WaroengUjang.git ```
 - create new branch
 - pull request to merge
 

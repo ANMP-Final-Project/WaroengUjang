@@ -7,8 +7,8 @@ import my.anmp.waroengujang.data.InvokeResponse
 
 class GetAllMenuRequest {
     private val url = "${ApiFactory.baseUrl}api/makanan.json"
-    fun request(onResult:InvokeResponse){
-        StringRequest(
+    fun request(onResult:InvokeResponse): StringRequest{
+        return StringRequest(
             Request.Method.GET, url, {
                 onResult.onSuccess(it)
             }, {

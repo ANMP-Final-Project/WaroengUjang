@@ -11,3 +11,4 @@ fun loadJSONFromAsset(context: Context, fileName: String): String {
 inline fun <reified T> convertJsonToObject(stringJson: String): T {
     return Gson().fromJson<T>(stringJson, T::class.java)
 }
+

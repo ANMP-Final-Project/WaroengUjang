@@ -1,5 +1,7 @@
 package my.anmp.waroengujang.view.mainmenu.account
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +12,13 @@ import com.github.dhaval2404.form_validation.rule.NonEmptyRule
 import com.github.dhaval2404.form_validation.rule.PasswordRule
 import com.github.dhaval2404.form_validation.validation.FormValidator
 import my.anmp.waroengujang.R
+import my.anmp.waroengujang.data.sharedpref.SharedPrefHelper
 import my.anmp.waroengujang.databinding.FragmentAccountBinding
 import my.anmp.waroengujang.util.showAlert
+import my.anmp.waroengujang.view.auth.AuthActivity
+import my.anmp.waroengujang.databinding.FragmentAccountBinding
+import my.anmp.waroengujang.util.showAlert
+
 
 class AccountFragment : Fragment(R.layout.fragment_account) {
     private var _binding: FragmentAccountBinding? = null
@@ -38,6 +45,18 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
                 }
             }
         }
+
+        binding.btnLogout.setOnClickListener {
+            SharedPrefHelper().deleteUser(
+                requireContext().getSharedPreferences(
+                    SharedPrefHelper.authPrefKey,
+                    Context.MODE_PRIVATE
+                )
+            )
+            startActivity(Intent(requireContext(),AuthActivity::class.java))
+            requireActivity().finish()
+        }
+
     }
 
     private fun isFormValidated(): Boolean {

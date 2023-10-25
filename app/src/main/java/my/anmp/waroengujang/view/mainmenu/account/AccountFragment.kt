@@ -19,7 +19,6 @@ import my.anmp.waroengujang.view.auth.AuthActivity
 import my.anmp.waroengujang.databinding.FragmentAccountBinding
 import my.anmp.waroengujang.util.showAlert
 
-
 class AccountFragment : Fragment(R.layout.fragment_account) {
     private var _binding: FragmentAccountBinding? = null
     private val binding get() = _binding!!

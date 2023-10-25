@@ -24,10 +24,23 @@
         android:id="@+id/nav_menu"
         android:name="my.anmp.waroengujang.view.mainmenu.menu.MenuFragment"
         android:label="Menu"
-        tools:layout="@layout/fragment_menu" />
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_nav_menu_to_detailMenuFragment"
+            app:destination="@id/detailMenuFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_order"
         android:name="my.anmp.waroengujang.view.mainmenu.orders.OrderFragment"
         android:label="Order"
         tools:layout="@layout/fragment_order" />
+    <fragment
+        android:id="@+id/detailMenuFragment"
+        tools:layout="@layout/fragment_detail_menu"
+        android:name="my.anmp.waroengujang.view.mainmenu.detailmenu.DetailMenuFragment"
+        android:label="DetailMenuFragment" >
+        <argument
+            android:name="data"
+            app:argType="my.anmp.waroengujang.data.model.Menu" />
+    </fragment>
 </navigation>

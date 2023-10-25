@@ -1,6 +1,8 @@
 package my.anmp.waroengujang.data.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class User(
     @SerializedName("id")
@@ -13,4 +15,4 @@ data class User(
     val workSince: String? = "",
     @SerializedName("password")
     val password: String? = ""
-)
+):Serializable

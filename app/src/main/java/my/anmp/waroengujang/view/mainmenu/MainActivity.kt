@@ -9,12 +9,15 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import my.anmp.waroengujang.R
+import my.anmp.waroengujang.data.model.Menu
 import my.anmp.waroengujang.data.sharedpref.SharedPrefHelper
 import my.anmp.waroengujang.databinding.ActivityMainBinding
 import my.anmp.waroengujang.view.auth.AuthActivity
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
+    var listOfItem = mutableListOf<Menu>()
+
     private lateinit var navController: NavController
     private val preference by lazy {
         applicationContext.getSharedPreferences(

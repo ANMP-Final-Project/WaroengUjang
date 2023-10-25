@@ -1,5 +1,6 @@
 package my.anmp.waroengujang.data.model
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
 data class Menu(
@@ -10,5 +11,7 @@ data class Menu(
     @SerializedName("thumbnail")
     val thumbnail: String? = "",
     @SerializedName("title")
-    val title: String? = ""
-)
+    val title: String? = "",
+    @SerializedName("quantity")
+    var quantity: Int = 0
+): Serializable

@@ -1,6 +1,11 @@
 package my.anmp.waroengujang.view.mainmenu.menu
 
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,8 +33,13 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val menuAdapter = MenuAdapter {
-            //TODO::DETAIL
+            findNavController().navigate(
+                R.id.action_nav_menu_to_detailMenuFragment,
+                bundleOf(Pair("data", it))
+            )
+            Log.d("TAG", "item clicked ${it.title}")
         }
+     
         binding.rvMenu.adapter = menuAdapter
 
         binding.fabTable.setOnClickListener {

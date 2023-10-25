@@ -16,6 +16,9 @@ import my.anmp.waroengujang.data.sharedpref.SharedPrefHelper
 import my.anmp.waroengujang.databinding.FragmentAccountBinding
 import my.anmp.waroengujang.util.showAlert
 import my.anmp.waroengujang.view.auth.AuthActivity
+import my.anmp.waroengujang.databinding.FragmentAccountBinding
+import my.anmp.waroengujang.util.showAlert
+
 
 class AccountFragment : Fragment(R.layout.fragment_account) {
     private var _binding: FragmentAccountBinding? = null
@@ -53,6 +56,7 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
             startActivity(Intent(requireContext(),AuthActivity::class.java))
             requireActivity().finish()
         }
+
     }
 
     private fun isFormValidated(): Boolean {

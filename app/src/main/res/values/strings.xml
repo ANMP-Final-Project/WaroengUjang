@@ -9,4 +9,5 @@
     <string name="serve_new_customer">Serve New Customer</string>
     <string name="enter_table_number">Enter Table Number</string>
     <string name="submit">Submit</string>
+    <string name="logout">Logout</string>
 </resources>

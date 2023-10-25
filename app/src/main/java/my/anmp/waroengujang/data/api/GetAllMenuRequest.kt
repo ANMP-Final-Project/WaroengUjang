@@ -14,6 +14,6 @@ class GetAllMenuRequest {
             }, {
                 onResult.onError(it)
             }
-        ).headers.put("User-Agent","Mozilla/5.0")
+        )
     }
 }

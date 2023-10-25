@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.github.dhaval2404.form_validation.rule.LengthRule
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule
 import com.github.dhaval2404.form_validation.rule.PasswordRule
 import com.github.dhaval2404.form_validation.validation.FormValidator
@@ -16,8 +15,6 @@ import my.anmp.waroengujang.data.sharedpref.SharedPrefHelper
 import my.anmp.waroengujang.databinding.FragmentAccountBinding
 import my.anmp.waroengujang.util.showAlert
 import my.anmp.waroengujang.view.auth.AuthActivity
-import my.anmp.waroengujang.databinding.FragmentAccountBinding
-import my.anmp.waroengujang.util.showAlert
 
 class AccountFragment : Fragment(R.layout.fragment_account) {
     private var _binding: FragmentAccountBinding? = null

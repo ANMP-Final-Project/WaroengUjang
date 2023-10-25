@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -36,6 +39,7 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
             )
             Log.d("TAG", "item clicked ${it.title}")
         }
+     
         binding.rvMenu.adapter = menuAdapter
 
         binding.fabTable.setOnClickListener {

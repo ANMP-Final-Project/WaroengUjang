@@ -34,6 +34,7 @@ class MenuAdapter(private val onItemClick: (Menu) -> Unit) :
                 tvMenu.text = dataset[position].title
                 tvPrice.text = "Rp. ${dataset[position].price.toString()}"
                 cvRoot.setOnClickListener {
+                root.setOnClickListener {
                     onItemClick(dataset[position])
                 }
             }

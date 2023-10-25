@@ -45,6 +45,4 @@
                 android:textStyle="italic" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </com.google.android.material.card.MaterialCardView>
-
-
 </androidx.appcompat.widget.LinearLayoutCompat>

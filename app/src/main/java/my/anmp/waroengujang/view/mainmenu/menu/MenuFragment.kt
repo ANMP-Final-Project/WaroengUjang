@@ -49,7 +49,7 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
             menuAdapter.changeDataSet(it)
         }
 
-        parentActivity.tableService.observe(viewLifecycleOwner) {
+        parentActivity.sharedMainViewModel.tableService.observe(viewLifecycleOwner) {
             if (it == 0) {
                 binding.fabTable.text = "Curently serving table : None"
             } else {

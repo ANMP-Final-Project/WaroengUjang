@@ -10,11 +10,12 @@ import my.anmp.waroengujang.R
 import my.anmp.waroengujang.data.sharedpref.SharedPrefHelper
 import my.anmp.waroengujang.databinding.FragmentHomeBinding
 import my.anmp.waroengujang.util.loadImage
+import my.anmp.waroengujang.util.shortToast
 import my.anmp.waroengujang.view.mainmenu.MainActivity
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
-    private lateinit var _binding: FragmentHomeBinding
-    private val binding get() = _binding
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     private val parentActivity by lazy { requireActivity() as MainActivity }
 
@@ -37,7 +38,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             )
         )
 
-        parentActivity.tableService.observe(viewLifecycleOwner) {
+        parentActivity.sharedMainViewModel.tableService.observe(viewLifecycleOwner) {
             if (it == 0) {
                 binding.tvTableNumber.text = "None"
             } else {
@@ -47,13 +48,22 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         with(binding) {
             btnSubmit.setOnClickListener {
-                parentActivity.updateTableService(binding.etTableNumber.text.toString().toInt())
+                parentActivity.sharedMainViewModel.updateTableService(
+                    binding.etTableNumber.text.toString().toInt()
+                )
+                shortToast(
+                    requireContext(),
+                    "Table change to number : ${parentActivity.sharedMainViewModel.tableService.value}"
+                )
             }
 
             tvName.text = userData.name
-            loadImage(requireContext(),userData.profilePic ?: "",ivProfilePic)
+            loadImage(requireContext(), userData.profilePic ?: "", ivProfilePic)
         }
+    }
 
-
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
     }
 }

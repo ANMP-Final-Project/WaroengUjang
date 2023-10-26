@@ -13,6 +13,7 @@ import com.github.dhaval2404.form_validation.validation.FormValidator
 import my.anmp.waroengujang.R
 import my.anmp.waroengujang.data.sharedpref.SharedPrefHelper
 import my.anmp.waroengujang.databinding.FragmentAccountBinding
+import my.anmp.waroengujang.util.loadImage
 import my.anmp.waroengujang.util.showAlert
 import my.anmp.waroengujang.view.auth.AuthActivity
 
@@ -31,6 +32,12 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val userData = SharedPrefHelper().getUser(
+            requireContext().getSharedPreferences(
+                SharedPrefHelper.authPrefKey,
+                Context.MODE_PRIVATE
+            )
+        )
         binding.btnSubmit.setOnClickListener {
             if (isFormValidated()) {
                 showAlert(requireContext(), "Success", "Password successfully changed") {
@@ -49,9 +56,12 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
                     Context.MODE_PRIVATE
                 )
             )
-            startActivity(Intent(requireContext(),AuthActivity::class.java))
+            startActivity(Intent(requireContext(), AuthActivity::class.java))
             requireActivity().finish()
         }
+        binding.tvName.text = userData.name
+        binding.tvWorkSince.text = "Work since ${userData.workSince}"
+        loadImage(requireContext(), userData.profilePic ?: "", binding.ivProfile)
 
     }
 

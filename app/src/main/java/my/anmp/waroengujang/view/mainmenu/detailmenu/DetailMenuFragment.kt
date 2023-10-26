@@ -1,6 +1,7 @@
 package my.anmp.waroengujang.view.mainmenu.detailmenu
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,8 +67,9 @@ class DetailMenuFragment : Fragment(R.layout.fragment_detail_menu) {
 
             btnSubmit.setOnClickListener {
                 data.quantity = tvQuantity.text.toString().toInt()
-                parentActivity.listOfItem.add(data)
+                parentActivity.sharedMainViewModel.addMenu(data)
                 showAlert(requireContext(), msg = "Menu added to cart", title = "Success")
+                Log.d("List item", parentActivity.sharedMainViewModel.listOfMenu.value.toString())
                 quantityOrder = 0
                 tvQuantity.text = "0"
             }

@@ -43,7 +43,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             val total = it.sumOf { menu -> (menu.quantity * menu.price!!) }
             binding.tvSubtotal.text = "Rp. ${total}"
             binding.tvTax.text = "Rp. ${(0.1 * total).toInt()}"
-            binding.tvTotal.text = "Rp. ${total - (0.1 * total).toInt()}"
+            binding.tvTotal.text = "Rp. ${total + (0.1 * total).toInt()}"
         }
 
         parentActivity.sharedMainViewModel.tableService.observe(viewLifecycleOwner) {

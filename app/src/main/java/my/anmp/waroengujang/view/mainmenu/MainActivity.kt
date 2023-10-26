@@ -2,8 +2,8 @@ package my.anmp.waroengujang.view.mainmenu
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.navigateUp
@@ -15,8 +15,10 @@ import my.anmp.waroengujang.databinding.ActivityMainBinding
 import my.anmp.waroengujang.view.auth.AuthActivity
 
 class MainActivity : AppCompatActivity() {
+    private val viewModel = MainViewModel()
     lateinit var binding: ActivityMainBinding
     var listOfItem = mutableListOf<Menu>()
+    val tableService get() = viewModel.tableService
 
     private lateinit var navController: NavController
     private val preference by lazy {
@@ -46,6 +48,10 @@ class MainActivity : AppCompatActivity() {
             this.finish()
         }
 
+    }
+
+    fun updateTableService(value: Int) {
+        viewModel.updateTableService(value)
     }
 
     override fun onSupportNavigateUp(): Boolean {

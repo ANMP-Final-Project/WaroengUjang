@@ -48,6 +48,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         with(binding) {
             btnSubmit.setOnClickListener {
+                if(binding.etTableNumber.text.toString().isEmpty()){
+                    shortToast(
+                        requireContext(),
+                        "You must fill the table number"
+                    )
+                    return@setOnClickListener
+                }
                 parentActivity.sharedMainViewModel.updateTableService(
                     binding.etTableNumber.text.toString().toInt()
                 )

@@ -55,3 +55,24 @@ fun showAlert(
         }
     }
 }
+
+fun showChooseAlert(
+    context: Context,
+    title: String = "Alert",
+    msg: String,
+    positiveButton: String = "Ok",
+    negativeButton: String = "No",
+    onConfirm: (MaterialDialog) -> Unit = { it.dismiss() },
+    onDecline: (MaterialDialog) -> Unit = { it.dismiss() },
+) {
+    MaterialDialog(context).show {
+        title(text = title)
+        message(text = msg)
+        negativeButton(text = negativeButton){
+            onDecline(it)
+        }
+        positiveButton(text = positiveButton) {
+            onConfirm(it)
+        }
+    }
+}

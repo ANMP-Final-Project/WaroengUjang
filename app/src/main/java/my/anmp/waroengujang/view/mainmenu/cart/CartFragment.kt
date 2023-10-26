@@ -40,7 +40,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
 
         parentActivity.sharedMainViewModel.listOfMenu.observe(viewLifecycleOwner) {
             cartAdapter.changeDataSet(it)
-            val total = it.sumOf { (it.quantity * it.price!!) }
+            val total = it.sumOf { menu -> (menu.quantity * menu.price!!) }
             binding.tvSubtotal.text = "Rp. ${total}"
             binding.tvTax.text = "Rp. ${(0.1 * total).toInt()}"
             binding.tvTotal.text = "Rp. ${total - (0.1 * total).toInt()}"

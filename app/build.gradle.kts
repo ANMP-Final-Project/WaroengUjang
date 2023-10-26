@@ -71,6 +71,7 @@ dependencies {
 
     //util
     implementation ("com.github.dhaval2404:android-form-validation:1.0")
+    implementation ("com.github.arsvechkarev:TimerX:3.1.0")
 
 
     testImplementation("junit:junit:4.13.2")

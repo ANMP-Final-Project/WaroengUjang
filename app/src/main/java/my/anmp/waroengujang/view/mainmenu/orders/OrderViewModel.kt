@@ -1,4 +1,4 @@
-package my.anmp.waroengujang.view.mainmenu.menu
+package my.anmp.waroengujang.view.mainmenu.orders
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -7,29 +7,27 @@ import androidx.lifecycle.ViewModel
 import com.android.volley.VolleyError
 import my.anmp.waroengujang.data.ApiFactory
 import my.anmp.waroengujang.data.InvokeResponse
-import my.anmp.waroengujang.data.api.AuthRequest
-import my.anmp.waroengujang.data.api.GetAllMenuRequest
-import my.anmp.waroengujang.data.model.Menu
-import my.anmp.waroengujang.data.model.User
+import my.anmp.waroengujang.data.api.GetAllOrderRequest
+import my.anmp.waroengujang.data.model.Order
 import my.anmp.waroengujang.util.convertJsonToObject
 
-class MenuViewModel(private val apiFactory: ApiFactory) : ViewModel() {
-    private val _listOfMenu = MutableLiveData<List<Menu>>()
+class OrderViewModel(private val apiFactory: ApiFactory) : ViewModel() {
+    private val _listOfOrder = MutableLiveData<List<Order>>()
     private val _errorMessage = MutableLiveData<List<String>>()
-    val listOfMenu: LiveData<List<Menu>> get() = _listOfMenu
+    val listOfOrder: LiveData<List<Order>> get() = _listOfOrder
     val errorMessage: LiveData<List<String>> get() = _errorMessage
 
     init {
-        fetchListMenu()
+        fetchData()
     }
 
-    private fun fetchListMenu() {
+    private fun fetchData() {
         _errorMessage.value = emptyList()
-        apiFactory.addToRequestQueue(GetAllMenuRequest().request(object : InvokeResponse {
+        apiFactory.addToRequestQueue(GetAllOrderRequest().request(object : InvokeResponse {
             override fun onSuccess(jsonString: String) {
                 Log.d("API_REQUEST", "onSuccess:$jsonString")
-                val result = convertJsonToObject<Array<Menu>>(jsonString)
-                _listOfMenu.postValue(result.toList())
+                val result = convertJsonToObject<Array<Order>>(jsonString)
+                _listOfOrder.postValue(result.toList())
             }
 
             override fun onError(volleyError: VolleyError) {

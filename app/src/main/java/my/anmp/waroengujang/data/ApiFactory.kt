@@ -10,7 +10,7 @@ import com.android.volley.toolbox.Volley
 
 class ApiFactory constructor(context: Context) {
     companion object {
-        const val baseUrl = "http://192.168.1.7:8080/"
+        const val baseUrl = "https://anxdre.my.id/"
         @Volatile
         private var INSTANCE: ApiFactory? = null
         fun getInstance(context: Context) =

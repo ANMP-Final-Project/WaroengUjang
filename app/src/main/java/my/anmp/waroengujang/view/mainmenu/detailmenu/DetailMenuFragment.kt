@@ -66,12 +66,15 @@ class DetailMenuFragment : Fragment(R.layout.fragment_detail_menu) {
             }
 
             btnSubmit.setOnClickListener {
-                data.quantity = tvQuantity.text.toString().toInt()
-                parentActivity.sharedMainViewModel.addMenu(data)
-                showAlert(requireContext(), msg = "Menu added to cart", title = "Success")
-                Log.d("List item", parentActivity.sharedMainViewModel.listOfMenu.value.toString())
-                quantityOrder = 0
-                tvQuantity.text = "0"
+                try {
+                    parentActivity.sharedMainViewModel.addMenu(data)
+                    data.quantity = tvQuantity.text.toString().toInt()
+                    showAlert(requireContext(), msg = "Menu added to cart", title = "Success")
+                    quantityOrder = 0
+                    tvQuantity.text = "0"
+                }catch (e:Exception){
+                    showAlert(requireContext(), msg = "Menu was added before", title = "Success")
+                }
             }
         }
     }

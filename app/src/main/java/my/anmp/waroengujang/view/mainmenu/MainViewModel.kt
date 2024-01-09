@@ -18,6 +18,9 @@ class MainViewModel : ViewModel() {
     }
 
     fun addMenu(menu: Menu) {
+        if(listOfMenu.value!!.contains(menu)){
+            throw IllegalArgumentException("Menu was added before")
+        }
         val temp = listOfMenu.value
         temp?.add(menu)
         listOfMenu.value = temp ?: return

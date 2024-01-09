@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -37,6 +38,9 @@ android {
     viewBinding{
         enable = true
     }
+    dataBinding{
+        enable = true
+    }
 }
 
 dependencies {
@@ -56,7 +60,8 @@ dependencies {
     //roomDB
     val roomVersion = "2.5.2"
     implementation("androidx.room:room-runtime:$roomVersion")
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
 
     //navigation
     val navVersion = "2.7.4"

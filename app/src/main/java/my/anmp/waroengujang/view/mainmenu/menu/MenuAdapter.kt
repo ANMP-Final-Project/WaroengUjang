@@ -44,4 +44,5 @@ class MenuAdapter(private val onItemClick: (Menu) -> Unit) :
         dataset.addAll(listOfMenu)
         notifyDataSetChanged()
     }
+
 }

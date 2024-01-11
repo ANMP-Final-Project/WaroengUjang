@@ -30,9 +30,7 @@ class MenuAdapter(private val onItemClick: (Menu) -> Unit) :
         RecyclerView.ViewHolder(itemBinding.root) {
         fun createView(position: Int) {
             with(itemBinding) {
-                loadImage(this.root.context, dataset[position].thumbnail ?: "", ivMenu)
-                tvMenu.text = dataset[position].title
-                tvPrice.text = "Rp. ${dataset[position].price.toString()}"
+                data = dataset[position]
                 cvRoot.setOnClickListener {
                     onItemClick(dataset[position])
                 }

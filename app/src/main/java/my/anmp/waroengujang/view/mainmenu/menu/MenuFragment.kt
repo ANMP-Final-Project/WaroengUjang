@@ -9,7 +9,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import my.anmp.waroengujang.R
-import my.anmp.waroengujang.data.ApiFactory
 import my.anmp.waroengujang.data.database.AppDB
 import my.anmp.waroengujang.data.model.Menu
 import my.anmp.waroengujang.databinding.FragmentMenuBinding
@@ -21,7 +20,6 @@ class MenuFragment : Fragment(R.layout.fragment_menu), MenuEventHandler {
 
     private val viewModel by lazy {
         MenuViewModel(
-            ApiFactory.getInstance(requireContext()),
             AppDB.getInstance(requireActivity().applicationContext)
         )
     }
@@ -38,14 +36,19 @@ class MenuFragment : Fragment(R.layout.fragment_menu), MenuEventHandler {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.viewModel = viewModel
         val menuAdapter = MenuAdapter {
-            OnMenuItemClickListener(it)
+            onMenuItemClickListener(it)
         }
-        binding.adapter = menuAdapter
+        binding.viewModel = viewModel
+        with(binding) {
+            adapter = menuAdapter
+            eventHandler = this@MenuFragment
+        }
+
         viewModel.listOfMenu.observe(viewLifecycleOwner) {
             menuAdapter.changeDataSet(it)
         }
+
         parentActivity.sharedMainViewModel.tableService.observe(viewLifecycleOwner) {
             if (it == 0) {
                 viewModel.tableServe = "Curently serving table : None"
@@ -55,11 +58,11 @@ class MenuFragment : Fragment(R.layout.fragment_menu), MenuEventHandler {
         }
     }
 
-    override fun OnClickServingTable() {
+    override fun onClickServingTable() {
         findNavController().navigateUp()
     }
 
-    override fun OnMenuItemClickListener(menu: Menu) {
+    override fun onMenuItemClickListener(menu: Menu) {
         findNavController().navigate(
             R.id.action_nav_menu_to_detailMenuFragment,
             bundleOf(Pair("data", menu))
@@ -67,7 +70,7 @@ class MenuFragment : Fragment(R.layout.fragment_menu), MenuEventHandler {
         Log.d("TAG", "item clicked ${menu.title}")
     }
 
-    override fun OnSearchChanged() {
+    override fun onSearchChanged() {
 
     }
 

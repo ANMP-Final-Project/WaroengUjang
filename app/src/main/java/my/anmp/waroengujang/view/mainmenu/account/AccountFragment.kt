@@ -10,16 +10,22 @@ import androidx.fragment.app.Fragment
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule
 import com.github.dhaval2404.form_validation.rule.PasswordRule
 import com.github.dhaval2404.form_validation.validation.FormValidator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import my.anmp.waroengujang.R
+import my.anmp.waroengujang.data.database.AppDB
+import my.anmp.waroengujang.data.model.User
 import my.anmp.waroengujang.data.sharedpref.SharedPrefHelper
 import my.anmp.waroengujang.databinding.FragmentAccountBinding
-import my.anmp.waroengujang.util.loadImage
 import my.anmp.waroengujang.util.showAlert
 import my.anmp.waroengujang.view.auth.AuthActivity
 
-class AccountFragment : Fragment(R.layout.fragment_account) {
+class AccountFragment : Fragment(R.layout.fragment_account), AccountEventHandler {
     private var _binding: FragmentAccountBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel by lazy { AccountViewModel(AppDB.getInstance(requireContext())) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,31 +44,10 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
                 Context.MODE_PRIVATE
             )
         )
-        binding.btnSubmit.setOnClickListener {
-            if (isFormValidated()) {
-                showAlert(requireContext(), "Success", "Password successfully changed") {
-                    binding.etOldPassword.text?.clear()
-                    binding.etNewPassword.text?.clear()
-                    binding.etReNewPassword.text?.clear()
-                    binding.etOldPassword.requestFocus()
-                }
-            }
+        with(binding) {
+            binding.data = userData
+            binding.eventHandler = this@AccountFragment
         }
-
-        binding.btnLogout.setOnClickListener {
-            SharedPrefHelper().deleteUser(
-                requireContext().getSharedPreferences(
-                    SharedPrefHelper.authPrefKey,
-                    Context.MODE_PRIVATE
-                )
-            )
-            startActivity(Intent(requireContext(), AuthActivity::class.java))
-            requireActivity().finish()
-        }
-        binding.tvName.text = userData.name
-        binding.tvWorkSince.text = "Work since ${userData.workSince}"
-        loadImage(requireContext(), userData.profilePic ?: "", binding.ivProfile)
-
     }
 
     private fun isFormValidated(): Boolean {
@@ -78,6 +63,26 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
                 NonEmptyRule("Must be filled"),
                 PasswordRule("Please provide combination of char,number & special char"),
             ).validate()
+    }
+
+    override fun onSubmitClick() {
+        if (isFormValidated()) {
+            showAlert(requireContext(), "Success", "Password successfully changed")
+        }
+    }
+
+    override fun onLogoutClick(userData: User) {
+        SharedPrefHelper().deleteUser(
+            requireContext().getSharedPreferences(
+                SharedPrefHelper.authPrefKey,
+                Context.MODE_PRIVATE
+            )
+        )
+        CoroutineScope(Dispatchers.IO).launch {
+            viewModel.deleteUserFromDb(userData)
+        }
+        startActivity(Intent(requireContext(), AuthActivity::class.java))
+        requireActivity().finish()
     }
 
     override fun onDestroyView() {

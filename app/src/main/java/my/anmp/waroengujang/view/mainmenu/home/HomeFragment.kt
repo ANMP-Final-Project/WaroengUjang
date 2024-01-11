@@ -13,7 +13,7 @@ import my.anmp.waroengujang.util.loadImage
 import my.anmp.waroengujang.util.shortToast
 import my.anmp.waroengujang.view.mainmenu.MainActivity
 
-class HomeFragment : Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment(R.layout.fragment_home), HomeEventHandler {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -25,6 +25,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
         return binding.root
     }
 
@@ -37,36 +38,37 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 Context.MODE_PRIVATE
             )
         )
+        with(binding) {
+            sharedViewModel = parentActivity.sharedMainViewModel
+            userName = userData.name
+            eventHandler = this@HomeFragment
+            loadImage(requireContext(), userData.profilePic ?: "", ivProfilePic)
+        }
 
         parentActivity.sharedMainViewModel.tableService.observe(viewLifecycleOwner) {
             if (it == 0) {
-                binding.tvTableNumber.text = "None"
+                parentActivity.sharedMainViewModel.tableNumber = "0"
             } else {
-                binding.tvTableNumber.text = it.toString()
+                parentActivity.sharedMainViewModel.tableNumber = it.toString()
             }
         }
+    }
 
-        with(binding) {
-            btnSubmit.setOnClickListener {
-                if(binding.etTableNumber.text.toString().isEmpty()){
-                    shortToast(
-                        requireContext(),
-                        "You must fill the table number"
-                    )
-                    return@setOnClickListener
-                }
-                parentActivity.sharedMainViewModel.updateTableService(
-                    binding.etTableNumber.text.toString().toInt()
-                )
-                shortToast(
-                    requireContext(),
-                    "Table change to number : ${parentActivity.sharedMainViewModel.tableService.value}"
-                )
-            }
-
-            tvName.text = userData.name
-            loadImage(requireContext(), userData.profilePic ?: "", ivProfilePic)
+    override fun onBtnSubmit() {
+        if (parentActivity.sharedMainViewModel.toString().isEmpty()) {
+            shortToast(
+                requireContext(),
+                "You must fill the table number"
+            )
+            return
         }
+        parentActivity.sharedMainViewModel.updateTableService(
+            parentActivity.sharedMainViewModel.tableNumber.toInt()
+        )
+        shortToast(
+            requireContext(),
+            "Table change to number : ${parentActivity.sharedMainViewModel.tableService.value}"
+        )
     }
 
     override fun onDestroy() {

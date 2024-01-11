@@ -15,7 +15,7 @@ import my.anmp.waroengujang.util.shortToast
 import my.anmp.waroengujang.util.showAlert
 import my.anmp.waroengujang.view.mainmenu.MainActivity
 
-class DetailMenuFragment : Fragment(R.layout.fragment_detail_menu) {
+class DetailMenuFragment : Fragment(R.layout.fragment_detail_menu),DetailMenuEventHandler {
     private var _binding: FragmentDetailMenuBinding? = null
     private val binding get() = _binding!!
 
@@ -33,7 +33,6 @@ class DetailMenuFragment : Fragment(R.layout.fragment_detail_menu) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val data: Menu? = arguments?.getSerializable("data") as Menu?
-        var quantityOrder = 0
 
         if (data == null) {
             shortToast(requireContext(), "Undefined data")
@@ -48,32 +47,32 @@ class DetailMenuFragment : Fragment(R.layout.fragment_detail_menu) {
         }
 
         with(binding) {
+            menuData = data
+            eventHandler = this@DetailMenuFragment
             loadImage(requireContext(), data.thumbnail ?: "", ivThumbnail)
-            tvTitle.text = data.title
-            tvDesc.text = data.desc
-            tvPrice.text = "IDR ${data.price.toString()}"
-
-            btnPlus.setOnClickListener {
-                quantityOrder++
-                tvQuantity.text = quantityOrder.toString()
-            }
-            btnMinus.setOnClickListener {
-                if (quantityOrder == 0) {
-                    return@setOnClickListener
-                }
-                quantityOrder--
-                tvQuantity.text = quantityOrder.toString()
-            }
-
-            btnSubmit.setOnClickListener {
-                data.quantity = tvQuantity.text.toString().toInt()
-                parentActivity.sharedMainViewModel.addMenu(data)
-                showAlert(requireContext(), msg = "Menu added to cart", title = "Success")
-                Log.d("List item", parentActivity.sharedMainViewModel.listOfMenu.value.toString())
-                quantityOrder = 0
-                tvQuantity.text = "0"
-            }
         }
+    }
+
+    override fun onSubmitButtonClick(data:Menu) {
+        try {
+            parentActivity.sharedMainViewModel.addMenu(data)
+            showAlert(requireContext(), msg = "Menu added to cart", title = "Success")
+        }catch (e:Exception){
+            showAlert(requireContext(), msg = "Menu was added before", title = "Success")
+        }
+    }
+
+    override fun onAddButtonClick() {
+        binding.menuData!!.quantity++
+        binding.tvQuantity.text = binding.menuData!!.quantity.toString()
+    }
+
+    override fun onMinusButtonClick() {
+        if (binding.menuData!!.quantity == 0) {
+            return
+        }
+        binding.menuData!!.quantity--
+        binding.tvQuantity.text = binding.menuData!!.quantity.toString()
     }
 
     override fun onDestroy() {

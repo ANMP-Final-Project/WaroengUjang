@@ -27,12 +27,12 @@ class CartAdapter(private val onItemChanged: (List<Menu>) -> Unit) :
     override fun getItemCount(): Int = dataset.size
 
     fun changeDataSet(data: List<Menu>) {
-        if (data.isNotEmpty()) {
-            dataset.clear()
-            dataset.addAll(data)
-            notifyDataSetChanged()
-        }
+        dataset.clear()
+        dataset.addAll(data)
+        notifyDataSetChanged()
     }
+
+    fun getDataSet(): List<Menu> = dataset
 
     inner class CartViewHolder(private val itemBinding: ItemCartBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
@@ -41,7 +41,8 @@ class CartAdapter(private val onItemChanged: (List<Menu>) -> Unit) :
             with(itemBinding) {
                 loadImage(this.root.context, dataset[position].thumbnail ?: "", ivThumbnail)
                 tvTilte.text = dataset[position].title
-                tvPrice.text = "Rp. " + (dataset[position].price!! * dataset[position].quantity).toString()
+                tvPrice.text =
+                    "Rp. " + (dataset[position].price!! * dataset[position].quantity).toString()
                 tvQuantity.text = dataset[position].quantity.toString()
 
                 btnMinus.setOnClickListener {

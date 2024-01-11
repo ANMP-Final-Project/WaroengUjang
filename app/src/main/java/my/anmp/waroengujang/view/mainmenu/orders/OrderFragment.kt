@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import my.anmp.waroengujang.R
-import my.anmp.waroengujang.data.ApiFactory
+import my.anmp.waroengujang.data.database.AppDB
 import my.anmp.waroengujang.data.model.Order
 import my.anmp.waroengujang.databinding.FragmentOrderBinding
 import my.anmp.waroengujang.util.showChooseAlert
@@ -16,7 +19,11 @@ class OrderFragment : Fragment(R.layout.fragment_order) {
     private var _binding: FragmentOrderBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by lazy { OrderViewModel(ApiFactory(requireContext())) }
+    private val viewModel by lazy {
+        OrderViewModel(
+            AppDB.getInstance(requireContext())
+        )
+    }
 
     private lateinit var adapter: OrderAdapter
 
@@ -31,22 +38,26 @@ class OrderFragment : Fragment(R.layout.fragment_order) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = OrderAdapter {
-            showAlert(it)
+        adapter = OrderAdapter { order, position ->
+            showAlert(order, position)
         }
 
-        binding.rvListOrder.adapter = adapter
-
+        binding.adapter = adapter
         viewModel.listOfOrder.observe(viewLifecycleOwner) {
             adapter.changeDataSet(it)
         }
     }
 
-    private fun showAlert(order: Order) {
+    private fun showAlert(order: Order, position: Int) {
+        var totalPrice = 0
+        order.listOfMenu.forEach {
+            totalPrice += (it.price?.times(it.quantity) ?: 0)
+        }
+
         showChooseAlert(
             requireContext(),
             "Table : ${order.table}",
-            "Order : ${order.listOfMenu?.map { "${it.title} x ${it.quantity}"}}",
+            "Order : ${order.listOfMenu.map { "${it.title} x ${it.quantity}" }} \nPrice : IDR $totalPrice",
             positiveButton = "Order More",
             negativeButton = "Close Bill",
             onConfirm = {
@@ -54,7 +65,11 @@ class OrderFragment : Fragment(R.layout.fragment_order) {
                 it.dismiss()
             },
             onDecline = {
-                adapter.deleteDataSet(order)
+                adapter.deleteDataSet(position)
+                CoroutineScope(Dispatchers.IO).launch {
+                    viewModel.deleteOrderFromDb(order)
+                    viewModel.deleteOrderMenuFromDb(order.id ?: 0)
+                }
                 it.dismiss()
             }
         )

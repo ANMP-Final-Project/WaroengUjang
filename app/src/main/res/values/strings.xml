@@ -10,4 +10,6 @@
     <string name="enter_table_number">Enter Table Number</string>
     <string name="submit">Submit</string>
     <string name="logout">Logout</string>
+    <string name="curently_serving_table">Curently serving table :</string>
+    <string name="change_table">Change table</string>
 </resources>

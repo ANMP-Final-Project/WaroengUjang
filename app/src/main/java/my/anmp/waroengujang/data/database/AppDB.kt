@@ -4,17 +4,30 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import my.anmp.waroengujang.data.model.Menu
 import my.anmp.waroengujang.data.model.Order
 import my.anmp.waroengujang.data.model.OrderMenu
+import my.anmp.waroengujang.data.model.User
 
-@Database(entities = [Menu::class,Order::class,OrderMenu::class], version = 1)
+@Database(entities = [Menu::class,Order::class,OrderMenu::class,User::class], version = 3)
 abstract class AppDB:RoomDatabase() {
-    abstract fun MenuDao(): MenuDAO
+    abstract fun menuDao(): MenuDAO
     abstract fun orderDao(): OrderDAO
+    abstract fun userDao(): UserDao
+
 
     companion object {
-        private const val Database_NAME = "todo.db"
+        val MIGRATION_1_2 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    "ALTER TABLE User ADD COLUMN tokenSession VARCHAR(250)"
+                )
+            }
+        }
+
+        private const val Database_NAME = "app.db"
 
         /**
          * As we need only one instance of db in our app will use to store
@@ -32,7 +45,7 @@ abstract class AppDB:RoomDatabase() {
                         context.applicationContext,
                         AppDB::class.java,
                         Database_NAME
-                    ).build()
+                    ).addMigrations(MIGRATION_1_2).fallbackToDestructiveMigrationOnDowngrade().build()
 
                     INSTANCE = instance
                 }

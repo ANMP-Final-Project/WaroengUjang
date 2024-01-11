@@ -22,6 +22,9 @@ interface OrderDAO {
     @Query("SELECT * FROM `Order`")
     fun getAllOrder(): Flow<List<Order>>
 
+    @Query("SELECT * FROM `Order` ORDER BY id DESC LIMIT 1")
+    fun getRecentOrder(): Order
+
     //menu order
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertOrderMenu(menuOrder: OrderMenu)
@@ -35,5 +38,5 @@ interface OrderDAO {
     fun deleteAllOrderMenu(orderId: Int)
 
     @Query("SELECT * FROM OrderMenu WHERE idOrder = :orderId")
-    fun getAllOrderMenu(orderId: Int): Flow<List<OrderMenu>>
+    fun getAllOrderMenu(orderId: Int): List<OrderMenu>
 }

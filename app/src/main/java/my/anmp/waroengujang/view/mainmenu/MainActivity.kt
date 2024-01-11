@@ -9,12 +9,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import my.anmp.waroengujang.R
+import my.anmp.waroengujang.data.database.AppDB
 import my.anmp.waroengujang.data.sharedpref.SharedPrefHelper
 import my.anmp.waroengujang.databinding.ActivityMainBinding
 import my.anmp.waroengujang.view.auth.AuthActivity
 
 class MainActivity : AppCompatActivity() {
-    val sharedMainViewModel = MainViewModel()
+    val sharedMainViewModel by lazy { MainViewModel( AppDB.getInstance(applicationContext)) }
     lateinit var binding: ActivityMainBinding
 
     private lateinit var navController: NavController

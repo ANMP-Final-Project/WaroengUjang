@@ -12,17 +12,13 @@ import java.io.Serializable
 data class OrderMenu(
     @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
-    val id: Int,
+    val id: Int?,
     @SerializedName("idOrder")
     val idOrder: Int,
-    @SerializedName("desc")
-    val desc: String? = "",
-    @SerializedName("price")
-    val price: Int? = 0,
-    @SerializedName("thumbnail")
-    val thumbnail: String? = "",
     @SerializedName("title")
     val title: String? = "",
+    @SerializedName("price")
+    val price: Int? = 0,
     @SerializedName("quantity")
-    var quantity: Int = 0,
+    var quantity: Int = 0
 ) : Serializable

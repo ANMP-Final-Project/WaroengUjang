@@ -10,13 +10,13 @@ import java.io.Serializable
 data class Order(
     @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
-    val id: Int? = 0,
+    val id: Int? = null,
     @SerializedName("table")
-    val table: Int? = 0,
+    var table: Int? = 0,
     @SerializedName("timer")
     var timer: String = ""
 ):Serializable{
     @Ignore
     @SerializedName("listOfMenu")
-    val listOfMenu: MutableList<Menu>? = mutableListOf()
+    val listOfMenu: MutableList<OrderMenu> = mutableListOf()
 }

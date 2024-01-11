@@ -11,6 +11,10 @@
         <variable
             name="adapter"
             type="my.anmp.waroengujang.view.mainmenu.menu.MenuAdapter" />
+
+        <variable
+            name="eventHandler"
+            type="my.anmp.waroengujang.view.mainmenu.menu.MenuEventHandler" />
     </data>
 
     <RelativeLayout
@@ -49,7 +53,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_margin="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:onClick="@{()->eventHandler.onClickServingTable()}"
             android:text="@={viewModel.tableServe}" />
     </RelativeLayout>
 </layout>
